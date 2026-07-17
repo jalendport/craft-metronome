@@ -1,0 +1,43 @@
+{% if tasks is empty %}
+	<p>{{ 'No scheduled tasks are registered.'|t('metronome') }}</p>
+{% else %}
+	<table class="data fullwidth">
+		<thead>
+			<tr>
+				<th>{{ 'Task'|t('metronome') }}</th>
+				<th>{{ 'Command'|t('metronome') }}</th>
+				<th>{{ 'Schedule'|t('metronome') }}</th>
+				<th>{{ 'Cron expression'|t('metronome') }}</th>
+				<th>{{ 'Next run'|t('metronome') }}</th>
+				<th>{{ 'Last run'|t('metronome') }}</th>
+				<th>{{ 'Status'|t('metronome') }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for task in tasks %}
+				<tr>
+					<td><strong>{{ task.name }}</strong></td>
+					<td><code>{{ task.command }}</code></td>
+					<td>{{ task.schedule }}</td>
+					<td style="white-space: nowrap"><code>{{ task.expression }}</code></td>
+					<td style="white-space: nowrap">{{ task.nextRun }}</td>
+					{% if task.lastRun %}
+						<td style="white-space: nowrap">{{ task.lastRun.date|datetime('short') }}</td>
+						<td>
+							{% if task.lastRun.success %}
+								<span class="status green"></span>{{ 'Success'|t('metronome') }}
+							{% else %}
+								<span class="status red"></span>{{ 'Failed'|t('metronome') }}
+							{% endif %}
+						</td>
+					{% else %}
+						<td class="light">{{ 'Never'|t('metronome') }}</td>
+						<td class="light">—</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<p class="light" style="margin-top: 16px;">{{ '{count, plural, =1{1 task} other{# tasks}} registered.'|t('metronome', { count: tasks|length }) }}</p>
+{% endif %}

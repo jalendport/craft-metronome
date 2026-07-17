@@ -1,0 +1,76 @@
+{
+  "name": "jalendport/craft-metronome",
+  "description": "A Laravel-style task scheduler for Craft CMS.",
+  "type": "craft-plugin",
+  "license": "mit",
+  "keywords": [
+    "craft",
+    "cms",
+    "craftcms",
+    "craft-plugin",
+    "scheduler",
+    "cron",
+    "tasks",
+    "crontab"
+  ],
+  "authors": [
+    {
+      "name": "Jalen Davenport",
+      "homepage": "https://jalendport.com"
+    }
+  ],
+  "support": {
+    "email": "hello@jalendport.com",
+    "issues": "https://github.com/jalendport/craft-metronome/issues",
+    "source": "https://github.com/jalendport/craft-metronome",
+    "docs": "https://github.com/jalendport/craft-metronome/blob/master/README.md"
+  },
+  "require": {
+    "php": "^8.2",
+    "craftcms/cms": "^5.0.0",
+    "jalendport/craft-base": "^1.1",
+    "dragonmantank/cron-expression": "^3.6"
+  },
+  "require-dev": {
+    "craftcms/ecs": "dev-main",
+    "craftcms/phpstan": "dev-main",
+    "craftcms/rector": "dev-main",
+    "pestphp/pest": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "jalendport\\metronome\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "jalendport\\metronome\\tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "name": "Metronome",
+    "handle": "metronome",
+    "class": "jalendport\\metronome\\Metronome",
+    "documentationUrl": "https://github.com/jalendport/craft-metronome/blob/master/README.md",
+    "changelogUrl": "https://raw.githubusercontent.com/jalendport/craft-metronome/master/CHANGELOG.md"
+  },
+  "scripts": {
+    "check-cs": "ecs check --ansi",
+    "fix-cs": "ecs check --ansi --fix",
+    "phpstan": "phpstan --memory-limit=1G",
+    "test": "pest"
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "8.2"
+    },
+    "allow-plugins": {
+      "pestphp/pest-plugin": true,
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
