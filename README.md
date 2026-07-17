@@ -48,34 +48,36 @@ Running every minute is recommended — it's the finest resolution the scheduler
 
 ### Defining tasks
 
-Your schedule lives in `config/metronome.php`, a file that returns a closure receiving the `Schedule` registry. Call one of the four registration methods to add a task, then chain the fluent methods below to shape when and how it runs.
+Your schedule lives in `config/metronome.php` — a standard plugin config file whose `schedule` key holds a closure receiving the `Schedule` registry. Call one of the four registration methods to add a task, then chain the fluent methods below to shape when and how it runs.
 
 ```php
 <?php
 
 use jalendport\metronome\services\Schedule;
 
-return static function(Schedule $schedule): void {
-    // A Craft console command. Pass extra arguments as the second array.
-    $schedule->command('utils/update-search-indexes')
-        ->daily();
+return [
+    'schedule' => static function(Schedule $schedule): void {
+        // A Craft console command. Pass extra arguments as the second array.
+        $schedule->command('utils/update-search-indexes')
+            ->daily();
 
-    $schedule->command('resave/entries', ['--section=news'])
-        ->hourly();
+        $schedule->command('resave/entries', ['--section=news'])
+            ->hourly();
 
-    // A raw shell command.
-    $schedule->exec('/usr/bin/backup.sh')
-        ->dailyAt('02:30');
+        // A raw shell command.
+        $schedule->exec('/usr/bin/backup.sh')
+            ->dailyAt('02:30');
 
-    // A PHP callable. Anything it echoes is captured as the task's output.
-    $schedule->call(function() {
-        // ...
-    })->everyFiveMinutes();
+        // A PHP callable. Anything it echoes is captured as the task's output.
+        $schedule->call(function() {
+            // ...
+        })->everyFiveMinutes();
 
-    // A queue job — pass a job instance or a job class name.
-    $schedule->job(\my\plugin\jobs\SyncJob::class)
-        ->hourly();
-};
+        // A queue job — pass a job instance or a job class name.
+        $schedule->job(\my\plugin\jobs\SyncJob::class)
+            ->hourly();
+    },
+];
 ```
 
 | Task type | Method | Runs |
@@ -220,7 +222,7 @@ Metronome has no control panel settings; your entire configuration is the schedu
 cp vendor/jalendport/craft-metronome/src/config.php config/metronome.php
 ```
 
-The template is fully commented with an example of every task type and fluent chain. Note that unlike Craft's array-based config files, the schedule file returns a closure — so Craft's multi-environment config merging doesn't apply here. Use `environments()` on a task to gate it by environment instead.
+The template is fully commented with an example of every task type and fluent chain. Because it's a standard plugin config file, it's [multi-environment aware](https://craftcms.com/docs/5.x/configure.html#multi-environment-configs) — nest the `schedule` key under environment keys to run a different schedule per environment, or keep one schedule and gate individual tasks with `environments()`.
 
 ### Registering tasks from a plugin or module
 

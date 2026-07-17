@@ -313,8 +313,9 @@ class Schedule extends Component
     }
 
     /**
-     * Loads the schedule once, from `config/metronome.php` and then any
-     * {@see EVENT_DEFINE_SCHEDULE} handlers.
+     * Loads the schedule once, from the `schedule` plugin setting (delivered
+     * by `config/metronome.php`) and then any {@see EVENT_DEFINE_SCHEDULE}
+     * handlers.
      *
      * The loaded flag is set before running the definitions so a task that
      * reads the schedule during registration can't trigger a reload.
@@ -332,14 +333,11 @@ class Schedule extends Component
 
         $this->_loaded = true;
 
-        $configPath = Craft::getAlias('@config/metronome.php');
+        // isset() guards direct instantiation outside a booted plugin (unit tests).
+        $definition = isset(Metronome::$plugin) ? Metronome::$plugin->getSettings()->schedule : null;
 
-        if (is_string($configPath) && file_exists($configPath)) {
-            $definition = require $configPath;
-
-            if (is_callable($definition)) {
-                $definition($this);
-            }
+        if ($definition !== null) {
+            $definition($this);
         }
 
         if ($this->hasEventHandlers(self::EVENT_DEFINE_SCHEDULE)) {

@@ -11,9 +11,11 @@
 namespace jalendport\metronome;
 
 use Craft;
+use craft\base\Model;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Utilities;
 use jalendport\base\Plugin;
+use jalendport\metronome\models\Settings;
 use jalendport\metronome\services\Schedule as ScheduleService;
 use jalendport\metronome\utilities\Schedule as ScheduleUtility;
 use yii\base\Event;
@@ -31,6 +33,7 @@ use yii\base\Event;
  * @since 1.0.0
  *
  * @property-read ScheduleService $schedule
+ * @method Settings getSettings()
  */
 class Metronome extends Plugin
 {
@@ -104,6 +107,26 @@ class Metronome extends Plugin
     public function getSchedule(): ScheduleService
     {
         return $this->get('schedule');
+    }
+
+    // Protected Methods
+    // =========================================================================
+
+    /**
+     * Creates the settings model.
+     *
+     * There is no settings page ({@see $hasCpSettings}); the model exists so
+     * Craft's `config/metronome.php` plugin-config mechanism can deliver the
+     * schedule definition.
+     *
+     * @return Model|null the settings model
+     *
+     * @author Jalen Davenport <hello@jalendport.com>
+     * @since 1.0.0
+     */
+    protected function createSettingsModel(): ?Model
+    {
+        return Craft::createObject(Settings::class);
     }
 
     // Private Methods
