@@ -1195,8 +1195,15 @@ class Task
         $callback = $this->_command;
 
         ob_start();
-        $callback(...$this->_args);
-        return ob_get_clean() ?: null;
+
+        try {
+            $callback(...$this->_args);
+        } finally {
+            // A throwing callback must not leak its output buffer.
+            $output = ob_get_clean();
+        }
+
+        return $output ?: null;
     }
 
     /**
