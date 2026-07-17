@@ -1,6 +1,5 @@
 /tests export-ignore
 /.github export-ignore
-/.agents export-ignore
 /ecs.php export-ignore
 /phpstan.neon export-ignore
 /phpunit.xml.dist export-ignore
