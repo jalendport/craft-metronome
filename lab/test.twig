@@ -1,0 +1,54 @@
+{% set plugin = craft.app.plugins.getPlugin('metronome') %}
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Metronome smoke test</title>
+	</head>
+	<body>
+		<h1>Metronome smoke test</h1>
+		<dl>
+			<dt>plugin installed</dt>
+			<dd>{{ plugin ? 'yes' : 'no' }}</dd>
+
+			<dt>plugin version</dt>
+			<dd>{{ plugin ? plugin.version : 'n/a' }}</dd>
+
+			<dt>tasks registered</dt>
+			<dd>{{ plugin ? plugin.schedule.tasks|length : 0 }}</dd>
+		</dl>
+
+		{% if plugin %}
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Command</th>
+						<th>Cron expression</th>
+						<th>Next run</th>
+						<th>Last run</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for task in plugin.schedule.tasks %}
+						{% set lastRun = plugin.schedule.getLastRun(task) %}
+						<tr>
+							<td>{{ task.label }}</td>
+							<td>{{ task.displayCommand }}</td>
+							<td>{{ task.expression }}</td>
+							<td>{{ task.nextRunDate|date('Y-m-d H:i') }}</td>
+							<td>
+								{% if lastRun %}
+									{{ lastRun.success ? 'success' : 'failed' }} at {{ lastRun.date }}
+								{% else %}
+									never
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	</body>
+</html>
