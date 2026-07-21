@@ -50,7 +50,7 @@ class Schedule extends Utility
      */
     public static function icon(): ?string
     {
-        return 'clock';
+        return 'calendar-check';
     }
 
     /**
