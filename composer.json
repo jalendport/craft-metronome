@@ -2,6 +2,7 @@
   "name": "jalendport/craft-metronome",
   "description": "A Laravel-style task scheduler for Craft CMS.",
   "type": "craft-plugin",
+  "version": "1.0.0",
   "license": "mit",
   "keywords": [
     "craft",
