@@ -2,9 +2,7 @@
 
 <h1 align="center">Metronome</h1>
 
-<p align="center"><em>A Laravel-style task scheduler for Craft CMS. One crontab entry, everything else in PHP.</em></p>
-
-Stop scattering cron lines across your server. Metronome gives you a single crontab entry that fires every minute — everything else lives in a fluent PHP schedule you keep in version control, right next to the rest of your project config.
+Metronome is a Craft CMS plugin that brings Laravel-style task scheduling to Craft. One crontab entry fires every minute; everything else lives in a fluent PHP schedule you keep in version control with the rest of your project.
 
 ## Features
 
