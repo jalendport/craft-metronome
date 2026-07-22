@@ -1,6 +1,6 @@
 {
   "name": "jalendport/craft-metronome",
-  "description": "A Laravel-style task scheduler for Craft CMS.",
+  "description": "Laravel-style task scheduling for Craft CMS: one crontab entry, everything else in PHP.",
   "type": "craft-plugin",
   "license": "mit",
   "keywords": [
