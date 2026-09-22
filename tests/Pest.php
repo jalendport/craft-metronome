@@ -46,4 +46,5 @@ function metronomeCraftStub(string $env = 'production', string $timezone = 'UTC'
 afterEach(function(): void {
     Craft::$app = null;
     Craft::setAlias('@config', null);
+    Craft::setAlias('@root', null);
 });

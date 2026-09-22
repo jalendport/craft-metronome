@@ -1108,9 +1108,10 @@ class Task
      */
     private function _buildCommandString(): string
     {
-        $php = PHP_BINARY;
+        $php = escapeshellarg(PHP_BINARY);
+        $craft = escapeshellarg((string)Craft::getAlias('@root') . '/craft');
         $command = is_string($this->_command) ? $this->_command : '';
-        $shell = $php . ' ' . (string)Craft::getAlias('@root') . '/craft ' . $command;
+        $shell = $php . ' ' . $craft . ' ' . $command;
 
         if ($this->_args !== []) {
             $shell .= ' ' . implode(' ', array_map('escapeshellarg', $this->_args));
